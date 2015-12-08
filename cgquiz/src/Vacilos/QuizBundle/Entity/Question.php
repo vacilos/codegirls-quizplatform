@@ -28,6 +28,11 @@ class Question {
     private $question;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $category;
+    /**
      * @var string $level
      *
      * @ORM\Column(name="level", type="smallint")
@@ -196,5 +201,29 @@ class Question {
     public function getAnswers()
     {
         return $this->answers;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \Vacilos\QuizBundle\Entity\Category $category
+     *
+     * @return Question
+     */
+    public function setCategory(\Vacilos\QuizBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Vacilos\QuizBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

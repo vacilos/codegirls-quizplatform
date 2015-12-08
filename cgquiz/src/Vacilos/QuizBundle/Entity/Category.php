@@ -52,6 +52,10 @@ class Category {
      */
     private $updated;
 
+    public function __toString() {
+        return $this->title;
+    }
+
 
     /**
      * Get id
