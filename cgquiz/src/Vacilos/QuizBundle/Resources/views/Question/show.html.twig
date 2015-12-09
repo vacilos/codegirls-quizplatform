@@ -1,0 +1,57 @@
+{% extends '::base_admin.html.twig' %}
+
+{% block body -%}
+    <h1>Question</h1>
+
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Question</th>
+                <td>{{ entity.question }}</td>
+            </tr>
+            <tr>
+                <th>Level</th>
+                <td>{{ entity.level }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Answers <a href="{{ path('answer_new', {'questionId': entity.id } ) }}" class="btn btn-success btn-sm">Προσθήκη</a></h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Απάντηση</th>
+            <th>Είναι σωστή;</th>
+        </tr>
+        </thead>
+        {% for answer in entity.answers %}
+            <tr>
+                <td>
+                    {{ answer }}
+                </td>
+                <td>
+                    {% if answer.isCorrect %}
+                    Ναι
+                    {% else %}
+                    Όχι
+                    {% endif %}
+                </td>
+
+            </tr>
+        {% endfor %}
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('question') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('question_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

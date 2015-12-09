@@ -1,0 +1,37 @@
+{% extends '::base_admin.html.twig' %}
+
+{% block pagetitle %}
+    <h1>{% trans %}Welcome{% endtrans %} {{ app.user }}
+        <small>{% trans %}Homepage{% endtrans %}</small>
+    </h1>
+{% endblock pagetitle %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="active"><i class="fa fa-dashboard"></i> {% trans %}Dashboard{% endtrans %}</li>
+    </ol>
+{% endblock breadcrumb %}
+
+{% block body -%}
+
+<dic class="row">
+    <div class="col-sm-12">
+        <div class="portlet portlet-green">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>
+                        Καλωσήλθες διαχειριστή
+                    </h4>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body">
+                <p>
+                    Αυτό είναι το εργαλείο διαχείρισης του CG Quiz
+                </p>
+            </div>
+        </div>
+    </div>
+</dic>
+
+{% endblock body %}

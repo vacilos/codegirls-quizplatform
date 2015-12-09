@@ -1,0 +1,30 @@
+answer:
+    path:     /
+    defaults: { _controller: "VacilosQuizBundle:Answer:index" }
+
+answer_show:
+    path:     /{id}/show
+    defaults: { _controller: "VacilosQuizBundle:Answer:show" }
+
+answer_new:
+    path:     /{questionId}/new
+    defaults: { _controller: "VacilosQuizBundle:Answer:new" }
+
+answer_create:
+    path:     /{questionId}/create
+    defaults: { _controller: "VacilosQuizBundle:Answer:create" }
+    methods:  POST
+
+answer_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "VacilosQuizBundle:Answer:edit" }
+
+answer_update:
+    path:     /{id}/update
+    defaults: { _controller: "VacilosQuizBundle:Answer:update" }
+    methods:  [POST, PUT]
+
+answer_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "VacilosQuizBundle:Answer:delete" }
+    methods:  [POST, DELETE]

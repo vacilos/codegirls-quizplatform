@@ -1,0 +1,16 @@
+{% extends '::base_admin.html.twig' %}
+{% form_theme form 'VacilosQuizBundle:Form:fields.html.twig' %}
+
+{% block body -%}
+    <h1>Answer creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('answer') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

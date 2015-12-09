@@ -1,0 +1,19 @@
+vacilos_quiz_quiz:
+    resource: "@VacilosQuizBundle/Resources/config/routing/quiz.yml"
+    prefix:   /admin/quiz
+
+vacilos_quiz_answer:
+    resource: "@VacilosQuizBundle/Resources/config/routing/answer.yml"
+    prefix:   /admin/answer
+
+vacilos_quiz_question:
+    resource: "@VacilosQuizBundle/Resources/config/routing/question.yml"
+    prefix:   /admin/question
+
+vacilos_quiz_category:
+    resource: "@VacilosQuizBundle/Resources/config/routing/category.yml"
+    prefix:   /admin/category
+
+vacilos_quiz_homepage:
+    path:     /
+    defaults: { _controller: VacilosQuizBundle:Default:index }

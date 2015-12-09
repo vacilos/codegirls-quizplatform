@@ -52,7 +52,9 @@ class Answer {
      */
     private $updated;
 
-
+public function __toString() {
+    return $this->answer;
+}
     /**
      * Get id
      *

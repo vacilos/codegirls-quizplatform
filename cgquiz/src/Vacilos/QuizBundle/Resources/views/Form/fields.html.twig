@@ -1,0 +1,88 @@
+{% block form_row %}
+    {% spaceless %}
+        <div class="form-group">
+            {% if requ is defined %}
+                {{ form_label(form, null, { 'label_attr': {'class': 'control-label requ'} }) }} {% if tt is defined %}&nbsp;&nbsp;<a href="#" class="btn btn-sm question" data-toggle="tooltip" title="{{tt}}"><i class="fa fa-question"></i></a>{% endif %}
+            {% else %}
+                {{ form_label(form, null, { 'label_attr': {'class': 'control-label'} }) }} {% if tt is defined %}&nbsp;&nbsp;<a href="#" class="btn btn-sm question" data-toggle="tooltip" title="{{tt}}"><i class="fa fa-question"></i></a>{% endif %}
+            {% endif %}
+            {{ form_errors(form) }}
+            <div class="controls">
+                {% if prepend is defined %}
+                    <div class="input-prepend input-group">
+                        <span class="input-group-addon">{{ prepend }}</span>{{ form_widget(form, {'attr': {'class': 'form-control'}} ) }}
+                    </div>
+                    {% if help is defined %}
+                        <small class="help-block">{{ help|raw }}</small>
+                    {% endif %}
+                {% elseif append is defined %}
+                    <div class="input-group">
+                        {{ form_widget(form, {'attr': {'class': 'form-control'}} ) }}<span class="input-group-addon">.00</span>
+                    </div>
+                    {% if help is defined %}
+                        <small class="help-block">{{ help|raw }}</small>
+                    {% endif %}
+                {% elseif euro is defined %}
+                    <div class="input-group">
+                        {{ form_widget(form, {'attr': {'class': 'form-control'}} ) }}<span class="input-group-addon">&euro;</span>
+                    </div>
+                    {% if help is defined %}
+                        <small class="help-block">{{ help|raw }}</small>
+                    {% endif %}
+                {% elseif icon is defined %}
+                    <div class="input-group">
+                        {{ form_widget(form, {'attr': {'class': 'form-control'}} ) }}<span class="input-group-addon"><i class="fa fa-{{icon}}"></i></span>
+                    </div>
+                    {% if help is defined %}
+                        <small class="help-block">{{ help|raw }}</small>
+                    {% endif %}
+                {% else %}
+                    {{ form_widget(form, {'attr': {'class': 'form-control'}} ) }}
+                    {% if help is defined %}
+                        <small class="help-block">{{ help|raw }}</small>
+                    {% endif %}
+                {% endif %}
+
+
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}
+
+
+{% block choice_widget_expanded %}
+    {% spaceless %}
+        <div {{ block('widget_container_attributes') }}>
+            {% if form|length > 10 %}
+                {% for child in form %}
+                    {% if loop.first %}
+                        <div class="col-md-2">
+                    {% endif %}
+                    {{ form_widget(child) }}
+                    {% if loop.index%10 == 0 and loop.last == false %}
+                        </div><div class="col-md-2">
+                    {% endif %}
+                    {% if loop.last %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% for child in form %}
+                    {{ form_widget(child) }}
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block checkbox_widget %}
+    {% spaceless %}
+        <label  for="{{ id }}" class="checkbox {% if checked %}checked{% endif %}" ><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />{{ label|trans }}</label>
+    {% endspaceless %}
+{% endblock checkbox_widget %}
+
+{% block radio_widget %}
+    {% spaceless %}
+        <label  for="{{ id }}"><input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />&nbsp;{{ label|trans }}</label><br/>
+    {% endspaceless %}
+{% endblock radio_widget %}
