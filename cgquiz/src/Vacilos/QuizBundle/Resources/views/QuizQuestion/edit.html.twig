@@ -1,14 +1,13 @@
-{% extends '::base_admin.html.twig' %}
-{% form_theme edit_form 'VacilosQuizBundle:Form:fields.html.twig' %}
+{% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Quiz edit</h1>
+    <h1>QuizQuestion edit</h1>
 
     {{ form(edit_form) }}
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('quiz') }}">
+        <a href="{{ path('quizquestion') }}">
             Back to the list
         </a>
     </li>

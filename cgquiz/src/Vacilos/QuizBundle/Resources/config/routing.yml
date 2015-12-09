@@ -1,3 +1,7 @@
+vacilos_quiz_quizquestion:
+    resource: "@VacilosQuizBundle/Resources/config/routing/quizquestion.yml"
+    prefix:   /admin/quizquestion
+
 vacilos_quiz_quiz:
     resource: "@VacilosQuizBundle/Resources/config/routing/quiz.yml"
     prefix:   /admin/quiz

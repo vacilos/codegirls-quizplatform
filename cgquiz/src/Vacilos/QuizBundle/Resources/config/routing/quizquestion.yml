@@ -1,0 +1,30 @@
+quizquestion:
+    path:     /
+    defaults: { _controller: "VacilosQuizBundle:QuizQuestion:index" }
+
+quizquestion_show:
+    path:     /{id}/show
+    defaults: { _controller: "VacilosQuizBundle:QuizQuestion:show" }
+
+quizquestion_new:
+    path:     /new
+    defaults: { _controller: "VacilosQuizBundle:QuizQuestion:new" }
+
+quizquestion_create:
+    path:     /create
+    defaults: { _controller: "VacilosQuizBundle:QuizQuestion:create" }
+    methods:  POST
+
+quizquestion_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "VacilosQuizBundle:QuizQuestion:edit" }
+
+quizquestion_update:
+    path:     /{id}/update
+    defaults: { _controller: "VacilosQuizBundle:QuizQuestion:update" }
+    methods:  [POST, PUT]
+
+quizquestion_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "VacilosQuizBundle:QuizQuestion:delete" }
+    methods:  [POST, DELETE]

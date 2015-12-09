@@ -8,7 +8,7 @@
     <meta name="description" content="MeAKA service for people to ">
     <meta name="author" content="Vacilos Inc.">
 
-    <title>MeAKA - {% block title %}{% endblock title %}</title>
+    <title>Codegirls Quiz Platform - {% block title %}{% endblock title %}</title>
 
     <!-- PACE LOAD BAR PLUGIN - This creates the subtle load bar effect at the top of the page. -->
     <link href="{{ asset('asset/css/plugins/pace/pace.css') }}" rel="stylesheet">
@@ -136,12 +136,17 @@
                 </li>
                 <li>
                     <a href="{{ path('category') }}">
-                        <i class="fa fa-dashboard"></i> Κατηγορίες
+                        <i class="fa fa-list"></i> Κατηγορίες
                     </a>
                 </li>
                 <li>
                     <a href="{{ path('question') }}">
-                        <i class="fa fa-dashboard"></i> Ερωτήσεις
+                        <i class="fa fa-question"></i> Ερωτήσεις
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('quiz') }}">
+                        <i class="fa fa-star"></i> Quiz
                     </a>
                 </li>
                 {#<li>#}

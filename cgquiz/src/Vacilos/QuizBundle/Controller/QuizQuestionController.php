@@ -5,37 +5,37 @@ namespace Vacilos\QuizBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Vacilos\QuizBundle\Entity\Quiz;
-use Vacilos\QuizBundle\Form\QuizType;
+use Vacilos\QuizBundle\Entity\QuizQuestion;
+use Vacilos\QuizBundle\Form\QuizQuestionType;
 
 /**
- * Quiz controller.
+ * QuizQuestion controller.
  *
  */
-class QuizController extends Controller
+class QuizQuestionController extends Controller
 {
 
     /**
-     * Lists all Quiz entities.
+     * Lists all QuizQuestion entities.
      *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('VacilosQuizBundle:Quiz')->findAll();
+        $entities = $em->getRepository('VacilosQuizBundle:QuizQuestion')->findAll();
 
-        return $this->render('VacilosQuizBundle:Quiz:index.html.twig', array(
+        return $this->render('VacilosQuizBundle:QuizQuestion:index.html.twig', array(
             'entities' => $entities,
         ));
     }
     /**
-     * Creates a new Quiz entity.
+     * Creates a new QuizQuestion entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity = new Quiz();
+        $entity = new QuizQuestion();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -44,26 +44,26 @@ class QuizController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('quiz_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('quizquestion_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('VacilosQuizBundle:Quiz:new.html.twig', array(
+        return $this->render('VacilosQuizBundle:QuizQuestion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Creates a form to create a Quiz entity.
+     * Creates a form to create a QuizQuestion entity.
      *
-     * @param Quiz $entity The entity
+     * @param QuizQuestion $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Quiz $entity)
+    private function createCreateForm(QuizQuestion $entity)
     {
-        $form = $this->createForm(new QuizType(), $entity, array(
-            'action' => $this->generateUrl('quiz_create'),
+        $form = $this->createForm(new QuizQuestionType(), $entity, array(
+            'action' => $this->generateUrl('quizquestion_create'),
             'method' => 'POST',
         ));
 
@@ -73,63 +73,60 @@ class QuizController extends Controller
     }
 
     /**
-     * Displays a form to create a new Quiz entity.
+     * Displays a form to create a new QuizQuestion entity.
      *
      */
     public function newAction()
     {
-        $entity = new Quiz();
+        $entity = new QuizQuestion();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('VacilosQuizBundle:Quiz:new.html.twig', array(
+        return $this->render('VacilosQuizBundle:QuizQuestion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a Quiz entity.
+     * Finds and displays a QuizQuestion entity.
      *
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('VacilosQuizBundle:Quiz')->find($id);
+        $entity = $em->getRepository('VacilosQuizBundle:QuizQuestion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Quiz entity.');
+            throw $this->createNotFoundException('Unable to find QuizQuestion entity.');
         }
-
-        $questions = $em->getRepository('VacilosQuizBundle:QuizQuestion')->findByQuiz($entity->getId());
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('VacilosQuizBundle:Quiz:show.html.twig', array(
+        return $this->render('VacilosQuizBundle:QuizQuestion:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-            'questions' => $questions
         ));
     }
 
     /**
-     * Displays a form to edit an existing Quiz entity.
+     * Displays a form to edit an existing QuizQuestion entity.
      *
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('VacilosQuizBundle:Quiz')->find($id);
+        $entity = $em->getRepository('VacilosQuizBundle:QuizQuestion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Quiz entity.');
+            throw $this->createNotFoundException('Unable to find QuizQuestion entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('VacilosQuizBundle:Quiz:edit.html.twig', array(
+        return $this->render('VacilosQuizBundle:QuizQuestion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -137,16 +134,16 @@ class QuizController extends Controller
     }
 
     /**
-    * Creates a form to edit a Quiz entity.
+    * Creates a form to edit a QuizQuestion entity.
     *
-    * @param Quiz $entity The entity
+    * @param QuizQuestion $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Quiz $entity)
+    private function createEditForm(QuizQuestion $entity)
     {
-        $form = $this->createForm(new QuizType(), $entity, array(
-            'action' => $this->generateUrl('quiz_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new QuizQuestionType(), $entity, array(
+            'action' => $this->generateUrl('quizquestion_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -155,17 +152,17 @@ class QuizController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Quiz entity.
+     * Edits an existing QuizQuestion entity.
      *
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('VacilosQuizBundle:Quiz')->find($id);
+        $entity = $em->getRepository('VacilosQuizBundle:QuizQuestion')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Quiz entity.');
+            throw $this->createNotFoundException('Unable to find QuizQuestion entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -175,17 +172,17 @@ class QuizController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('quiz_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('quizquestion_edit', array('id' => $id)));
         }
 
-        return $this->render('VacilosQuizBundle:Quiz:edit.html.twig', array(
+        return $this->render('VacilosQuizBundle:QuizQuestion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
     /**
-     * Deletes a Quiz entity.
+     * Deletes a QuizQuestion entity.
      *
      */
     public function deleteAction(Request $request, $id)
@@ -195,21 +192,21 @@ class QuizController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('VacilosQuizBundle:Quiz')->find($id);
+            $entity = $em->getRepository('VacilosQuizBundle:QuizQuestion')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Quiz entity.');
+                throw $this->createNotFoundException('Unable to find QuizQuestion entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('quiz'));
+        return $this->redirect($this->generateUrl('quizquestion'));
     }
 
     /**
-     * Creates a form to delete a Quiz entity by id.
+     * Creates a form to delete a QuizQuestion entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -218,7 +215,7 @@ class QuizController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('quiz_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('quizquestion_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
