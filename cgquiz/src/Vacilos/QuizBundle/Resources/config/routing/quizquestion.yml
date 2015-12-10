@@ -7,11 +7,11 @@ quizquestion_show:
     defaults: { _controller: "VacilosQuizBundle:QuizQuestion:show" }
 
 quizquestion_new:
-    path:     /new
+    path:     /{quizId}/new
     defaults: { _controller: "VacilosQuizBundle:QuizQuestion:new" }
 
 quizquestion_create:
-    path:     /create
+    path:     /{quizId}/create
     defaults: { _controller: "VacilosQuizBundle:QuizQuestion:create" }
     methods:  POST
 

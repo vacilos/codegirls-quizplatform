@@ -21,7 +21,7 @@ class QuizQuestion {
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Quiz")
+     * @ORM\ManyToOne(targetEntity="Quiz", inversedBy="quizQuestions")
      * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $quiz;

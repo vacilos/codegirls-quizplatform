@@ -21,3 +21,7 @@ vacilos_quiz_category:
 vacilos_quiz_homepage:
     path:     /
     defaults: { _controller: VacilosQuizBundle:Default:index }
+
+vacilos_quiz_user:
+    resource: "@VacilosQuizBundle/Resources/config/routing/userquiz.yml"
+    path:     /userquiz

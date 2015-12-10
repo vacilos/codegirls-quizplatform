@@ -63,6 +63,9 @@ class Question {
         $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString() {
+        return $this->question;
+    }
     /**
      * Get id
      *

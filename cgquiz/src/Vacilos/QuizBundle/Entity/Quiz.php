@@ -52,6 +52,10 @@ class Quiz {
      */
     private $updated;
 
+    /**
+     * @ORM\OneToMany(targetEntity="QuizQuestion", mappedBy="question")
+     */
+    private $quizQuestions;
 
     /**
      * Get id
@@ -181,5 +185,46 @@ class Quiz {
     public function getUpdated()
     {
         return $this->updated;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->quizQuestions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add quizQuestion
+     *
+     * @param \Vacilos\QuizBundle\Entity\QuizQuestion $quizQuestion
+     *
+     * @return Quiz
+     */
+    public function addQuizQuestion(\Vacilos\QuizBundle\Entity\QuizQuestion $quizQuestion)
+    {
+        $this->quizQuestions[] = $quizQuestion;
+
+        return $this;
+    }
+
+    /**
+     * Remove quizQuestion
+     *
+     * @param \Vacilos\QuizBundle\Entity\QuizQuestion $quizQuestion
+     */
+    public function removeQuizQuestion(\Vacilos\QuizBundle\Entity\QuizQuestion $quizQuestion)
+    {
+        $this->quizQuestions->removeElement($quizQuestion);
+    }
+
+    /**
+     * Get quizQuestions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuizQuestions()
+    {
+        return $this->quizQuestions;
     }
 }

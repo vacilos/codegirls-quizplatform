@@ -16,9 +16,6 @@ class QuizQuestionType extends AbstractType
     {
         $builder
             ->add('ordering')
-            ->add('created')
-            ->add('updated')
-            ->add('quiz')
             ->add('question')
         ;
     }

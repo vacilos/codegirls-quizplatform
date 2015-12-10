@@ -1,0 +1,12 @@
+userquiz_list:
+    path:     /list
+    defaults: { _controller: "VacilosQuizBundle:Default:quizList" }
+
+userquiz_my_list:
+    path:     /list
+    defaults: { _controller: "VacilosQuizBundle:Default:myQuiz" }
+
+userquiz_my_list:
+    path:     /list
+    defaults: { _controller: "VacilosQuizBundle:Default:myQuiz" }
+

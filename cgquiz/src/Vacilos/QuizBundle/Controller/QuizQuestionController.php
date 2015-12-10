@@ -4,7 +4,7 @@ namespace Vacilos\QuizBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Symfony\Component\Form\FormError;
 use Vacilos\QuizBundle\Entity\QuizQuestion;
 use Vacilos\QuizBundle\Form\QuizQuestionType;
 
@@ -33,18 +33,37 @@ class QuizQuestionController extends Controller
      * Creates a new QuizQuestion entity.
      *
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, $quizId)
     {
+        $em = $this->getDoctrine()->getManager();
+        $quiz = $em->getRepository('VacilosQuizBundle:Quiz')->find($quizId);
+
         $entity = new QuizQuestion();
+        $entity->setQuiz($quiz);
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $qq = $quiz->getQuizQuestions();
+            $currentQuestion = $entity->getQuestion();
+            if(sizeof($qq) > 0) {
+                foreach($qq as $quest) {
+                    if($quest->getId() == $currentQuestion->getId()) {
+                        $form->get('question')->addError(new FormError('Η ερώτηση έχει ήδη προστεθεί'));
+                        return $this->render('VacilosQuizBundle:QuizQuestion:new.html.twig', array(
+                            'entity' => $entity,
+                            'form'   => $form->createView(),
+                        ));
+                    }
+                }
+            }
+
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('quizquestion_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('quiz_show', array('id' => $quiz->getId())));
         }
 
         return $this->render('VacilosQuizBundle:QuizQuestion:new.html.twig', array(
@@ -63,7 +82,7 @@ class QuizQuestionController extends Controller
     private function createCreateForm(QuizQuestion $entity)
     {
         $form = $this->createForm(new QuizQuestionType(), $entity, array(
-            'action' => $this->generateUrl('quizquestion_create'),
+            'action' => $this->generateUrl('quizquestion_create', array('quizId'=> $entity->getQuiz()->getId())),
             'method' => 'POST',
         ));
 
@@ -76,9 +95,13 @@ class QuizQuestionController extends Controller
      * Displays a form to create a new QuizQuestion entity.
      *
      */
-    public function newAction()
+    public function newAction($quizId)
     {
+        $em = $this->getDoctrine()->getManager();
+        $quiz = $em->getRepository('VacilosQuizBundle:Quiz')->find($quizId);
+
         $entity = new QuizQuestion();
+        $entity->setQuiz($quiz);
         $form   = $this->createCreateForm($entity);
 
         return $this->render('VacilosQuizBundle:QuizQuestion:new.html.twig', array(
