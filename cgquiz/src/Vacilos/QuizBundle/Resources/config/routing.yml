@@ -18,10 +18,11 @@ vacilos_quiz_category:
     resource: "@VacilosQuizBundle/Resources/config/routing/category.yml"
     prefix:   /admin/category
 
+vacilos_quiz_user:
+    resource: "@VacilosQuizBundle/Resources/config/routing/userquiz.yml"
+    prefix:     /userquiz
+
 vacilos_quiz_homepage:
     path:     /
     defaults: { _controller: VacilosQuizBundle:Default:index }
 
-vacilos_quiz_user:
-    resource: "@VacilosQuizBundle/Resources/config/routing/userquiz.yml"
-    path:     /userquiz

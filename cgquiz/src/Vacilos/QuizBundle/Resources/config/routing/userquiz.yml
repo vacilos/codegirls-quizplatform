@@ -3,10 +3,18 @@ userquiz_list:
     defaults: { _controller: "VacilosQuizBundle:Default:quizList" }
 
 userquiz_my_list:
-    path:     /list
+    path:     /list/my
     defaults: { _controller: "VacilosQuizBundle:Default:myQuiz" }
 
-userquiz_my_list:
-    path:     /list
-    defaults: { _controller: "VacilosQuizBundle:Default:myQuiz" }
+userquiz_view:
+    path:     /{slug}/view
+    defaults: { _controller: "VacilosQuizBundle:Default:viewQuiz" }
+
+userquiz_enter:
+    path:     /{quizId}/enter
+    defaults: { _controller: "VacilosQuizBundle:Default:enterQuiz" }
+
+userquiz_answer:
+    path:     /{quizId}/{questionId}/{answerId}/submit/answer
+    defaults: { _controller: "VacilosQuizBundle:Default:answerQuestion" }
 

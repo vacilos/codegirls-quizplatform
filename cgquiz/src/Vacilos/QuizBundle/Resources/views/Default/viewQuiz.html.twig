@@ -1,0 +1,70 @@
+{% extends '::base.html.twig' %}
+
+{% block pagetitle %}
+    <h1>{% trans %}View Quiz{% endtrans %} {{ app.user }}
+        <small>{% trans %}Quiz{% endtrans %}</small>
+    </h1>
+{% endblock pagetitle %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="active"><i class="fa fa-dashboard"></i> {% trans %}View Quiz{% endtrans %}</li>
+    </ol>
+{% endblock breadcrumb %}
+
+{% block body -%}
+
+<dic class="row">
+    <div class="col-sm-6">
+        <div class="portlet portlet-blue">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>
+                        {{ quiz }}
+                    </h4>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body">
+                <p>
+                    {{ quiz.description }}
+                </p>
+            </div>
+        </div>
+        </div>
+    <div class="col-sm-6">
+        <div class="portlet portlet-green">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>
+                        Ενέργειες
+                    </h4>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>
+                            Κατάσταση
+                        </th>
+                        <td>
+                            {% if userQuiz is not null %}
+                                {{ userQuiz.showStatus }}
+                            {% else %}
+                                Δεν έχεις αρχίσει
+                            {% endif %}
+                            <a href="{{ path('userquiz_enter', {'quizId':quiz.id}) }}" class="btn btn-default"><i class="fa fa-sign-in"></i> </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</dic>
+
+
+
+
+    {% endblock %}

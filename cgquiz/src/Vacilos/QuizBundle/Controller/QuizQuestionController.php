@@ -46,19 +46,21 @@ class QuizQuestionController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $qq = $quiz->getQuizQuestions();
-            $currentQuestion = $entity->getQuestion();
-            if(sizeof($qq) > 0) {
-                foreach($qq as $quest) {
-                    if($quest->getId() == $currentQuestion->getId()) {
-                        $form->get('question')->addError(new FormError('Η ερώτηση έχει ήδη προστεθεί'));
-                        return $this->render('VacilosQuizBundle:QuizQuestion:new.html.twig', array(
-                            'entity' => $entity,
-                            'form'   => $form->createView(),
-                        ));
-                    }
-                }
-            }
+//            $qq = $quiz->getQuizQuestions();
+//            $data = $form->getData();
+//            $curQuest = $data->getQuestion();
+//            $currentQuestionId = $curQuest->getId();
+//            if(sizeof($qq) > 0) {
+//                foreach($qq as $quest) {
+//                    if($quest->getId() == $currentQuestionId) {
+//                        $form->get('question')->addError(new FormError('Η ερώτηση έχει ήδη προστεθεί'));
+//                        return $this->render('VacilosQuizBundle:QuizQuestion:new.html.twig', array(
+//                            'entity' => $entity,
+//                            'form'   => $form->createView(),
+//                        ));
+//                    }
+//                }
+//            }
 
             $em->persist($entity);
             $em->flush();

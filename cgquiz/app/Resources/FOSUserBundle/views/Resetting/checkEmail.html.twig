@@ -1,0 +1,21 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <div class="login-box">
+    <div class="login-img">
+        <img src="{{ asset('assets/img/logo_md.jpg') }}" class="img-responsive" />
+    </div>
+    <div class="header">
+        Υπενθύμιση κωδικού
+    </div>
+    <div>
+        <p>
+        Σας στείλαμε ένα email στο λογαριασμό email με τον οποίο έχετε εγγραφεί. Το email αυτό περιέχει έναν σύνδεσμο (link) τον οποίον πρέπει να πατήσετε για να ξαναβάλετε νέον κωδικό (password)
+    </p>
+    </div>
+    <a class="pull-left" href="{{ path('fos_user_security_login') }}">Κάντε σύνδεση</a>
+    <div class="clearfix"></div>
+    
+</div>
+    
+{% endblock %}

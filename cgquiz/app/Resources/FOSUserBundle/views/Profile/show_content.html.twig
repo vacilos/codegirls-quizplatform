@@ -1,0 +1,30 @@
+<div class="login-box">
+    <div class="login-img">
+        <img src="{{ asset('assets/img/logo_md.jpg') }}" class="img-responsive" />
+    </div>
+    <div class="header">
+        ΠΡΟΦΙΛ ΧΡΗΣΤΗ
+    </div>
+    
+    
+        
+        <fieldset class="col-sm-12">
+            
+<div class="fos_user_user_show">
+    <p>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}: {{ user.username }}</p>
+    <p>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}: {{ user.email }}</p>
+</div>
+
+            
+
+            <div class="row">
+                <a href="{{ path('fos_user_security_login') }}" type="submit" class="btn btn-lg btn-primary col-xs-12">ΕΙΣΟΔΟΣ</a>
+            </div>
+        </fieldset>
+
+    
+
+    <div class="clearfix"></div>
+    
+</div>
+

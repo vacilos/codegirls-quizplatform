@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="MeAKA service for people to ">
+        <meta name="author" content="Vacilos Inc.">
+
+        <title>MeAKA - {% block title %}{% endblock title %}</title>
+
+        <!-- PACE LOAD BAR PLUGIN - This creates the subtle load bar effect at the top of the page. -->
+        <link href="{{ asset('asset/css/plugins/pace/pace.css') }}" rel="stylesheet">
+        <script src="{{ asset('asset/js/plugins/pace/pace.js') }}"></script>
+
+        <!-- GLOBAL STYLES - Include these on every page. -->
+        <link href="{{ asset('asset/css/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic' rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel="stylesheet" type="text/css">
+        <link href="{{ asset('asset/icons/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+
+        <!-- THEME STYLES - Include these on every page. -->
+        <link href="{{ asset('asset/css/style.css') }}" rel="stylesheet">
+        <link href="{{ asset('asset/css/plugins.css') }}" rel="stylesheet">
+
+        <!--[if lt IE 9]>
+          <script src="js/html5shiv.js"></script>
+          <script src="js/respond.min.js"></script>
+        <![endif]-->
+    {% block stylesheets %}{% endblock stylesheets %}
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- begin MAIN PAGE CONTENT -->
+        <div id="page-wrapper">
+
+            <div class="page-content">
+
+                <div class="row">
+                    <div class="col-lg-6 col-lg-offset-3">
+                        <h1 class="error-title">404</h1>
+                        <h4 class="error-msg"><i class="fa fa-warning text-red"></i> Page Not Found</h4>
+                        <p class="lead">The page you've requested could not be found on the server. Please contact your webmaster, or use the back button in your browser to navigate back to your most recent active page.</p>
+                        <small>{{ status_text }}</small>
+
+                    </div>
+                    <!-- /.col-lg-6 -->
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.page-content -->
+
+        </div>
+        <!-- /#page-wrapper -->
+        <!-- end MAIN PAGE CONTENT -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- GLOBAL SCRIPTS -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="{{ asset('asset/js/plugins/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('asset/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('asset/js/plugins/popupoverlay/jquery.popupoverlay.js') }}"></script>
+    <script src="{{ asset('asset/js/plugins/popupoverlay/defaults.js') }}"></script>
+
+    <!-- HISRC Retina Images -->
+    <script src="{{ asset('asset/js/plugins/hisrc/hisrc.js') }}"></script>
+
+
+    <!-- THEME SCRIPTS -->
+    <script src="{{ asset('asset/js/flex.js') }}"></script>
+    {#<script src="{{ asset('asset/js/demo/dashboard-demo.js') }}"></script>#}
+{% block javascripts %}{% endblock javascripts %}
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+{% extends '::base.html.twig' %}
+
+{% block pagetitle %}
+    <h1>{% trans %}Present Question{% endtrans %} {{ app.user }}
+        <small>{% trans %}Quiz{% endtrans %}</small>
+    </h1>
+{% endblock pagetitle %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="active"><i class="fa fa-dashboard"></i> {% trans %}Present Question{% endtrans %}</li>
+    </ol>
+{% endblock breadcrumb %}
+
+{% block body -%}
+
+<dic class="row">
+    <div class="col-sm-12">
+        <div class="portlet portlet-blue">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>
+                        {{ userQuiz.quiz }}
+                    </h4>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body">
+                <h3>
+                    {{ question.question }}
+                </h3>
+
+            </div>
+        </div>
+    </div>
+
+    {% for answer in question.question.answers %}
+    <div class="col-sm-3">
+        <div class="portlet portlet-basic">
+            <div class="portlet-body">
+                <h4>
+                    {{ answer }}
+                </h4>
+            </div>
+            <div class="portlet-footer">
+                <a href="{{ path('userquiz_answer', {'quizId':userQuiz.quiz.id, 'questionId':question.question.id, 'answerId':answer.id}) }}" class="btn btn-block btn-lg btn-primary"><i class="fa fa-check"></i> ΕΠΙΛΟΓΗ</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</dic>
+
+
+
+
+    {% endblock %}

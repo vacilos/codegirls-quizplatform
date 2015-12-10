@@ -55,6 +55,16 @@ class UserQuiz {
      */
     private $updated;
 
+    public function showStatus() {
+        switch($this->status) {
+            case 1:
+                return "Έχει ξεκινήσει";
+            break;
+            case 2:
+                return "Ολοκληρωμένο";
+            break;
+        }
+    }
 
     /**
      * Get id

@@ -1,0 +1,92 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}    
+    <div class="row boxcont">
+        <div class="span box large">
+            <div>
+                {% block fos_user_content %}
+                
+					<div class="login-box">
+    <div class="login-img">
+        <img src="{{ asset('assets/img/logo_md.jpg') }}" class="img-responsive" />
+    </div>
+    <div class="header">
+        ΑΛΛΑΓΗ ΚΩΔΙΚΟΥ
+    </div>
+    
+    <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
+        {% if form_errors(form)|length > 0 %}
+        <div class="alert alert-danger">
+            {{ form_errors(form) }}
+        </div>
+        {% endif %}
+        
+        <fieldset class="col-sm-12">
+
+            <div class="form-group">
+                <label class="control-label" for="inputPasswordFirst">Κωδικός</label>
+                <div class="controls">
+                    {% if form_errors(form.plainPassword.first)|length > 0 %}
+                    <div class="alert alert-danger">{{ form_errors(form.plainPassword.first) }}</div>
+                    {% endif %}
+                    {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="inputPasswordSecond">Επανάληψη κωδικού</label>
+                <div class="controls">
+                    {% if form_errors(form.plainPassword.second)|length > 0 %}
+                    <div class="alert alert-danger">{{ form_errors(form.plainPassword.second) }}</div>
+                    {% endif %}
+                    {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+
+            {#<div class="confirm">#}
+                {#<input type="checkbox" name="agree"/>#}
+                {#<label for="agree">I agree to <a href="page-register.html#">Term of Use</a></label>#}
+            {#</div>#}
+
+            <div class="row">
+                <button type="submit" class="btn btn-lg btn-primary col-xs-12">Αλλαγή</button>
+            </div>
+        </fieldset>
+
+        {{ form_rest(form) }}
+    </form>
+    
+    <a class="pull-left" href="{{ path('fos_user_security_login') }}">Έχετε ήδη εγγραφεί; Κάντε σύνδεση</a>
+
+    <div class="clearfix"></div>
+    
+</div>
+
+                {% endblock fos_user_content %}
+            </div>
+        </div>
+        <div class="span box small">
+            {% for key, message in app.session.getFlashes() %}
+                <div class="{{ key }}">
+                    {{ message|trans({}, 'FOSUserBundle') }}
+                </div>
+            {% else %}
+                <h1>Why register?</h1>
+                <p>
+                    <ul>
+                    <li>Subscribe to any city you like</li>
+                    <li>Stay tuned to the latest tips</li>
+                    <li>Vote for the best tips</li>
+                    <li>Receive the best tips at your e-mail</li>
+                    </ul>
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock body %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        var locationId = 'register';        
+    </script>
+{% endblock javascripts %}

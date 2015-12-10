@@ -4,6 +4,7 @@ namespace Vacilos\QuizBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Vacilos\QuizBundle\Entity\UserQuizAnswer;
+use Vacilos\QuizBundle\Entity\UserQuiz;
 
 class DefaultController extends Controller
 {
@@ -25,10 +26,28 @@ class DefaultController extends Controller
     public function quizListAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $quiz = $em->getRepository("VacilosQuizBundle:Quiz")->findAll();
+        $quizs = $em->getRepository("VacilosQuizBundle:Quiz")->findAll();
 
         return $this->render('VacilosQuizBundle:Default:quizList.html.twig', array(
-            'quiz' => $quiz
+            'quizs' => $quizs
+        ));
+
+    }
+
+    public function viewQuizAction($slug)
+    {
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $quiz = $em->getRepository("VacilosQuizBundle:Quiz")->findOneBySlug($slug);
+
+        $userQuiz = $em->getRepository("VacilosQuizBundle:UserQuiz")->findOneBy(array(
+            'quiz' => $quiz->getId(),
+            'user' => $user->getId()
+        ));
+
+        return $this->render('VacilosQuizBundle:Default:viewQuiz.html.twig', array(
+            'quiz' => $quiz,
+            'userQuiz' => $userQuiz
         ));
 
     }
@@ -45,22 +64,34 @@ class DefaultController extends Controller
 
     }
 
-    public function enterQuiz($quizId)
+    public function enterQuizAction($quizId)
     {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
-        $quiz = $em->getRepository("VacilosQuizBundle:UserQuiz")->findOneBy(array(
+
+        $quiz = $em->getRepository("VacilosQuizBundle:Quiz")->find($quizId);
+
+        $userquiz = $em->getRepository("VacilosQuizBundle:UserQuiz")->findOneBy(array(
             'user' => $user->getId(),
-            'quiz' => $quizId
+            'quiz' => $quiz->getId()
         ));
+
+
+        if(!$userquiz) {
+            $userquiz = new UserQuiz();
+            $userquiz->setQuiz($quiz);
+            $userquiz->setUser($user);
+            $em->persist($userquiz);
+            $em->flush();
+        }
 
         $repository = $this->getDoctrine()
             ->getRepository('VacilosQuizBundle:UserQuizAnswer');
 
         $query = $repository->createQueryBuilder('uqa')
-            ->join('uqa.userQuiz', 'uq')
+            ->join('uqa.userquiz', 'uq')
             ->where('uq.quiz = :quizId')
-            ->andWhere('uqa.user = :user')
+            ->andWhere('uq.user = :user')
             ->setParameter('quizId', $quizId)
             ->setParameter('user', $user->getId())
             ->getQuery();
@@ -75,35 +106,55 @@ class DefaultController extends Controller
         $repository = $this->getDoctrine()
             ->getRepository('VacilosQuizBundle:QuizQuestion');
 
-        $query = $repository->createQueryBuilder('qq')
+        $prepare = $repository->createQueryBuilder('qq')
             ->join('qq.question', 'q')
             ->where('qq.quiz = :quizId')
-            ->andWhere('q.id NOT IN (:banned)')
             ->setParameter('quizId', $quizId)
-            ->setParameter('banned', $bannedList)
             ->orderBy('qq.ordering', 'ASC')
-            ->getQuery();
+            ->setMaxResults(1);
+
+        if(sizeof($bannedList) > 0) {
+            $prepare = $prepare
+                ->andWhere('q.id NOT IN (:banned)')
+                ->setParameter('banned', $bannedList);
+        }
+
+        $query = $prepare->getQuery();
 
         $pickAQuestion = $query->getOneOrNullResult();
 
         if ($pickAQuestion == null) {
             // finished the quiz
-            $quiz->setStatus(2);
-            return $this->render('VacilosQuizBundle:Default:presentQuestion.html.twig', array(
+            $userquiz->setStatus(2);
+            $em->persist($userquiz);
+            $em->flush();
+
+            $correct = 0;
+            foreach($userQuizAnswers as $answer) {
+                if($answer->getAnswer()->getIsCorrect() == 1) {
+                    ++$correct;
+                }
+            }
+
+            return $this->render('VacilosQuizBundle:Default:quizFinish.html.twig', array(
                 'quiz' => $quiz,
-                'question' => $pickAQuestion
+                'answers' => $userQuizAnswers,
+                'correct' => $correct
             ));
         } else {
+
             // go to the question
-            $quiz->setStatus(1);
+            $userquiz->setStatus(1);
+            $em->persist($userquiz);
+            $em->flush();
             return $this->render('VacilosQuizBundle:Default:presentQuestion.html.twig', array(
-                'userQuiz' => $quiz,
+                'userQuiz' => $userquiz,
                 'question' => $pickAQuestion
             ));
         }
     }
 
-    public function answerQuestion($quizId, $questionId, $answerId)
+    public function answerQuestionAction($quizId, $questionId, $answerId)
     {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
@@ -132,7 +183,7 @@ class DefaultController extends Controller
 
         $em->flush();
 
-        return $this->redirectToRoute();
+        return $this->redirectToRoute('userquiz_enter', array('quizId' => $quizId));
     }
 
 

@@ -1,0 +1,21 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <div class="col-md-4 col-md-offset-4">
+        <div class="login-banner text-center">
+            <h1><i class="fa fa-gears"></i> CodeGirls Quiz</h1>
+        </div>
+        <div class="portlet portlet-green">
+            <div class="portlet-heading login-heading">
+                <div class="portlet-title">
+                    <h4 class="text-center"><strong>Register to CodeGirls Quiz!</strong>
+                    </h4>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body">
+                <p>{{ 'registration.check_email'|trans({'%email%': user.email}, 'FOSUserBundle') }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock fos_user_content %}

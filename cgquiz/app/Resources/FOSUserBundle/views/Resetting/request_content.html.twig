@@ -1,0 +1,36 @@
+
+<div class="login-box">
+    <div class="login-img">
+        <img src="{{ asset('assets/img/logo_md.jpg') }}" class="img-responsive" />
+    </div>
+    <div class="header">
+        Ξεχασατε τον κωδικο;
+    </div>
+    <div>
+        Αν ξεχάσατε τον κωδικό σας, γράψτε στο ακόλουθο πεδίο το mail εγγραφής ή το username εγγραφής σας και θα σας αποσταλεί με mail η διαδικασία ανανέωσης του κωδικού.
+    </div>
+    <form class="form-horizontal" action="{{ path('fos_user_resetting_send_email') }}" method="POST">
+        {% if invalid_username is defined %}
+            <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+        {% endif %}        
+        <fieldset class="col-sm-12 spacer">
+            <div class="control-group">
+            <div class="controls">
+                <input type="text" id="username" placeholder="Username or e-mail" name="username" class="form-control" />
+            </div>
+        </div>
+
+            
+            <div class="row">
+
+                <button type="submit" class="btn btn-lg btn-primary col-xs-12">Αποστολή</button>
+
+            </div>
+
+        </fieldset>
+
+    </form>
+    <a class="pull-left" href="{{ path('fos_user_security_login') }}">Κάντε σύνδεση</a>
+    <div class="clearfix"></div>
+
+</div>
