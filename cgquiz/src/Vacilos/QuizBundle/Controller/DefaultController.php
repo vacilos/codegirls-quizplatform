@@ -51,6 +51,23 @@ class DefaultController extends Controller
         ));
 
     }
+    public function resetQuizAction($slug)
+    {
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $quiz = $em->getRepository("VacilosQuizBundle:Quiz")->findOneBySlug($slug);
+
+        $userQuiz = $em->getRepository("VacilosQuizBundle:UserQuiz")->findOneBy(array(
+            'quiz' => $quiz->getId(),
+            'user' => $user->getId()
+        ));
+
+        $em->remove($userQuiz);
+        $em->flush();
+
+        return $this->redirectToRoute('userquiz_enter', array('quizId' => $quiz->getId()));
+
+    }
 
     public function myQuizAction()
     {
@@ -59,7 +76,7 @@ class DefaultController extends Controller
         $quiz = $em->getRepository("VacilosQuizBundle:UserQuiz")->findByUser($user);
 
         return $this->render('VacilosQuizBundle:Default:myQuiz.html.twig', array(
-            'quiz' => $quiz
+            'quizs' => $quiz
         ));
 
     }
@@ -183,7 +200,25 @@ class DefaultController extends Controller
 
         $em->flush();
 
-        return $this->redirectToRoute('userquiz_enter', array('quizId' => $quizId));
+        $correctAns = null;
+        $correct = 0;
+        foreach($quizQuestion->getQuestion()->getAnswers() as $ans) {
+            if($ans->getIsCorrect()) {
+                $correctAns = $ans;
+                if($ans->getId() == $answer->getId()) {
+                    $correct = 1;
+                }
+            }
+        }
+        return $this->render('VacilosQuizBundle:Default:answer.html.twig', array(
+            'quizId' => $quizId,
+            'correctAns' => $correctAns,
+            'correct' => $correct,
+            'userQuiz' => $quiz,
+            'answer' => $answer
+
+        ));
+
     }
 
 

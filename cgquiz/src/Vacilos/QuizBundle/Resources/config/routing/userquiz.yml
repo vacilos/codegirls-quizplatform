@@ -14,6 +14,10 @@ userquiz_enter:
     path:     /{quizId}/enter
     defaults: { _controller: "VacilosQuizBundle:Default:enterQuiz" }
 
+userquiz_reset:
+    path:     /{slug}/reset
+    defaults: { _controller: "VacilosQuizBundle:Default:resetQuiz" }
+
 userquiz_answer:
     path:     /{quizId}/{questionId}/{answerId}/submit/answer
     defaults: { _controller: "VacilosQuizBundle:Default:answerQuestion" }

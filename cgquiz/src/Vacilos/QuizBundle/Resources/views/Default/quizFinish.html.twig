@@ -43,7 +43,17 @@
                 <div class="clearfix"></div>
             </div>
             <div class="portlet-body">
-                <h1>{{ (100*correct/(answers|length))|number_format(0,',','.') }}%</h1>
+                <h2 class="text-success">
+                    Συγχαρητήρια! Ολοκλήρωσες το quiz! Παρακάτω φαίνεται ο αριθμός των ερωτήσεων που είχες σωστές!
+                </h2>
+                <h3>Οι σωστές απαντήσεις που έδωσες ήταν {{ correct }}</h3>
+            </div>
+            <div class="portlet-footer">
+                <div class="pull-right">
+                    <a href="{{ path('userquiz_reset', {'slug': quiz.slug}) }}" class="btn btn-danger btn-sm">Ξεκίνα από την αρχή</a><br/>
+                    <small>Οι απαντήσεις που έχεις δώσει θα χαθούν!</small>
+                </div>
+    <div class="clearfix"></div>
             </div>
         </div>
 
